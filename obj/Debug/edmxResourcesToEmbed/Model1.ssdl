@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="cargoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="bookingCargo">
+    <Key>
+      <PropertyRef Name="booking_id" />
+    </Key>
+    <Property Name="booking_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="customer_id" Type="int" />
+    <Property Name="product_id" Type="int" />
+    <Property Name="quantity" Type="varchar" MaxLength="20" />
+    <Property Name="total_cost" Type="int" />
+    <Property Name="booking_date" Type="datetime" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'cargo.dbo.cargoOrder' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="cargoOrder">
+          <Property Name="booking_id" Type="int" />
+          <Property Name="quantity" Type="varchar" MaxLength="20" />
+          <Property Name="flight_info" Type="varchar" MaxLength="20" />
+          <Property Name="arrival_date" Type="varchar" MaxLength="20" />
+          <Property Name="status" Type="varchar" MaxLength="20" />
+          <Property Name="gate_pass_id" Type="int" />
+        </EntityType>-->
+  <EntityType Name="city">
+    <Key>
+      <PropertyRef Name="city_id" />
+    </Key>
+    <Property Name="city_id" Type="int" Nullable="false" />
+    <Property Name="state" Type="varchar" MaxLength="20" />
+    <Property Name="country" Type="varchar" MaxLength="20" />
+    <Property Name="pincode" Type="varchar" MaxLength="20" />
+    <Property Name="city_name" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="customer">
+    <Key>
+      <PropertyRef Name="customer_id" />
+    </Key>
+    <Property Name="customer_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="customer_name" Type="varchar" MaxLength="20" />
+    <Property Name="customer_address" Type="varchar" MaxLength="20" />
+    <Property Name="customer_mobile" Type="varchar" MaxLength="20" />
+    <Property Name="customer_email" Type="varchar" MaxLength="20" />
+    <Property Name="activestatus" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="employee">
+    <Key>
+      <PropertyRef Name="emp_id" />
+    </Key>
+    <Property Name="emp_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="emp_name" Type="varchar" MaxLength="20" />
+    <Property Name="emp_department" Type="varchar" MaxLength="20" />
+    <Property Name="emp_salary" Type="int" />
+    <Property Name="emp_mobile" Type="varchar" MaxLength="20" />
+    <Property Name="activestatus" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="gatePass">
+    <Key>
+      <PropertyRef Name="number" />
+    </Key>
+    <Property Name="number" Type="int" Nullable="false" />
+    <Property Name="truck_number" Type="int" />
+    <Property Name="city_id" Type="int" />
+    <Property Name="issued_date" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Login">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="varchar" MaxLength="50" />
+    <Property Name="UserPassword" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="product">
+    <Key>
+      <PropertyRef Name="product_id" />
+    </Key>
+    <Property Name="product_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="product_name" Type="varchar" MaxLength="20" />
+    <Property Name="product_type" Type="varchar" MaxLength="20" />
+    <Property Name="product_price" Type="int" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6013: The table/view 'cargo.dbo.rejectedCargo' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="rejectedCargo">
+          <Property Name="booking_id" Type="int" />
+          <Property Name="reason" Type="varchar" MaxLength="20" />
+          <Property Name="status" Type="varchar" MaxLength="20" />
+        </EntityType>-->
+  <EntityType Name="RoleMaster">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RollName" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="UserRolesMapping">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="RoleID" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__bookingCa__custo__2B3F6F97">
+    <End Role="customer" Type="Self.customer" Multiplicity="0..1" />
+    <End Role="bookingCargo" Type="Self.bookingCargo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="customer">
+        <PropertyRef Name="customer_id" />
+      </Principal>
+      <Dependent Role="bookingCargo">
+        <PropertyRef Name="customer_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__bookingCa__produ__2C3393D0">
+    <End Role="product" Type="Self.product" Multiplicity="0..1" />
+    <End Role="bookingCargo" Type="Self.bookingCargo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="product">
+        <PropertyRef Name="product_id" />
+      </Principal>
+      <Dependent Role="bookingCargo">
+        <PropertyRef Name="product_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <!--Errors Found During Generation:
+error 6004: The table 'cargo.dbo.cargoOrder' is referenced by a relationship, but cannot be found.
+        <Association Name="FK__cargoOrde__booki__34C8D9D1" />-->
+  <!--Errors Found During Generation:
+error 6004: The table 'cargo.dbo.cargoOrder' is referenced by a relationship, but cannot be found.
+        <Association Name="FK__cargoOrde__gate___35BCFE0A" />-->
+  <Association Name="FK__gatePass__city_i__31EC6D26">
+    <End Role="city" Type="Self.city" Multiplicity="0..1" />
+    <End Role="gatePass" Type="Self.gatePass" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="city">
+        <PropertyRef Name="city_id" />
+      </Principal>
+      <Dependent Role="gatePass">
+        <PropertyRef Name="city_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <!--Errors Found During Generation:
+error 6004: The table 'cargo.dbo.rejectedCargo' is referenced by a relationship, but cannot be found.
+        <Association Name="FK__rejectedC__booki__37A5467C" />-->
+  <Association Name="FK__UserRoles__RoleI__70DDC3D8">
+    <End Role="RoleMaster" Type="Self.RoleMaster" Multiplicity="1" />
+    <End Role="UserRolesMapping" Type="Self.UserRolesMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RoleMaster">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserRolesMapping">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UserRoles__UserI__6FE99F9F">
+    <End Role="Login" Type="Self.Login" Multiplicity="1" />
+    <End Role="UserRolesMapping" Type="Self.UserRolesMapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Login">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="UserRolesMapping">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="cargoModelStoreContainer">
+    <EntitySet Name="bookingCargo" EntityType="Self.bookingCargo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="city" EntityType="Self.city" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="customer" EntityType="Self.customer" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="employee" EntityType="Self.employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="gatePass" EntityType="Self.gatePass" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="product" EntityType="Self.product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RoleMaster" EntityType="Self.RoleMaster" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserRolesMapping" EntityType="Self.UserRolesMapping" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__bookingCa__custo__2B3F6F97" Association="Self.FK__bookingCa__custo__2B3F6F97">
+      <End Role="customer" EntitySet="customer" />
+      <End Role="bookingCargo" EntitySet="bookingCargo" />
+    </AssociationSet>
+    <AssociationSet Name="FK__bookingCa__produ__2C3393D0" Association="Self.FK__bookingCa__produ__2C3393D0">
+      <End Role="product" EntitySet="product" />
+      <End Role="bookingCargo" EntitySet="bookingCargo" />
+    </AssociationSet>
+    <AssociationSet Name="FK__gatePass__city_i__31EC6D26" Association="Self.FK__gatePass__city_i__31EC6D26">
+      <End Role="city" EntitySet="city" />
+      <End Role="gatePass" EntitySet="gatePass" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UserRoles__RoleI__70DDC3D8" Association="Self.FK__UserRoles__RoleI__70DDC3D8">
+      <End Role="RoleMaster" EntitySet="RoleMaster" />
+      <End Role="UserRolesMapping" EntitySet="UserRolesMapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UserRoles__UserI__6FE99F9F" Association="Self.FK__UserRoles__UserI__6FE99F9F">
+      <End Role="Login" EntitySet="Login" />
+      <End Role="UserRolesMapping" EntitySet="UserRolesMapping" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

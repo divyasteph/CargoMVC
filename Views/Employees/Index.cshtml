@@ -1,0 +1,70 @@
+﻿@model IEnumerable<CargoManagement.employee>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>List Of Employees</h2>
+
+
+    
+    @using (Html.BeginForm())
+    {
+        <p>
+            <br />
+            Name of the Employee: @Html.TextBox("SearchString") 
+            <input type="submit" value="Search" />
+            <br />
+        </p>
+        <br />
+     }
+
+
+    
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Employee_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Employee_Department)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Employee_Designation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Employee_Mobile)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActiveStatus)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee_Department)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee_Designation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Employee_Mobile)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ActiveStatus)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Employee_ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Employee_ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Employee_ID })
+                </td>
+            </tr>
+        }
+
+    </table>

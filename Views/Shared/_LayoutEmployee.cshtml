@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Employee  Portal", "Display", "Employees", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+
+                    
+                    @if (User.Identity.IsAuthenticated)
+                    {
+
+
+                    if (User.IsInRole("Admin") || User.IsInRole("User"))
+                    {
+                    <li>@Html.ActionLink("Employees List", "Index", "Employees")</li>
+
+                    <li>@Html.ActionLink("Register", "Create", "Employees")</li>
+                    <li>@Html.ActionLink("Search For Customer", "Index", "customers")</li>
+                    <li>@Html.ActionLink("Update City", "Index", "cities")</li>
+                    <li>@Html.ActionLink("Update Product&Price", "Index", "products")</li>
+
+
+
+                    }
+                    else if (User.IsInRole("Employee") || User.IsInRole("User"))
+                    {
+                    <li>@Html.ActionLink("Customer List", "Index", "customers")</li>
+                    <li>@Html.ActionLink("City List", "Index", "cities")</li>
+                    <li>@Html.ActionLink("Cargo Order List", "Index", "cargoOrders")</li>
+                    <li>@Html.ActionLink("Create Profile", "Create", "employees")</li>
+                    }
+                    else if (User.IsInRole("Customer") || User.IsInRole("User"))
+                    {
+                    <li>@Html.ActionLink("Book Cargo", "Index", "bookingCargoes")</li>
+                    <li>@Html.ActionLink("Product List", "Index", "products")</li>
+                    <li>@Html.ActionLink("Create Profile", "Create", "customers")</li>
+
+                    }
+
+
+                    <li><a>Hello - @User.Identity.Name</a></li>
+                    <li>@Html.ActionLink("Logout", "Logout", "Accounts")</li>
+                    }
+                    else
+                    {
+                    @*
+                    <li>@Html.ActionLink("SetRole", "SetRole", "Accounts")</li>*@
+                    <li>@Html.ActionLink("Login", "Login", "Accounts")</li>
+
+                    }
+
+
+                </ul>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+﻿@model IEnumerable<CargoManagement.product>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>List Of Products</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Product_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Product_Type)
+        </th>
+        @*
+        <th>
+            @Html.DisplayNameFor(model => model.Product_Price)
+        </th>
+            *@
+        <th>
+            @Html.DisplayNameFor(model => model.Shipping_Charge)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Product_Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Product_Type)
+    </td>
+    @*
+    <td>
+        @Html.DisplayFor(modelItem => item.Product_Price)
+    </td>
+        *@
+    <td>
+        @Html.DisplayFor(modelItem => item.Shipping_Charge)
+    </td>
+    <td>
+        @*
+        @Html.ActionLink("Edit", "Edit", new { id = item.Product_ID }) |
+        @Html.ActionLink("Details", "Details", new { id = item.Product_ID }) |
+
+        @* @Html.ActionLink("Delete", "Delete", new { id = item.product_id })*@
+    </td>
+</tr>
+}
+
+</table>
